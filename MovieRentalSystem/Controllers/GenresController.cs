@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MovieRentalSystem.Services;
+using MovieRentalSystem.ViewModels.Genres;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,8 @@ namespace MovieRentalSystem.Controllers
         // GET: Genres
         public ActionResult Index()
         {
-            return View();
+			var Genres = StoreDataService.GetAllGenres();
+            return View(Genres);
         }
 
         // GET: Genres/Details/5

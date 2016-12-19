@@ -1,0 +1,27 @@
+﻿@model  MovieRentalSystem.ViewModels.Genres.IndexViewModel
+
+@{
+    ViewBag.Title = "Genre Index";
+}
+
+<h2>Current Genres:</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Genre Name</th>
+    </tr>
+
+@foreach (var item in Model.Genres) {
+    <tr>
+		<td>@Html.DisplayFor(modelItem => item.Name)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

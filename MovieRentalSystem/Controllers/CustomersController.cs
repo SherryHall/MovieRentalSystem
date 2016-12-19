@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieRentalSystem.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,8 @@ namespace MovieRentalSystem.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View();
+			var Customers = StoreDataService.GetAllCustomers();
+            return View(Customers);
         }
 
         // GET: Customers/Details/5
