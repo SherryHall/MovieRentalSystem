@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Admin Page";
+}
+
+<div class="row col-md-12">
+	<h2>Movie Admin</h2>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<p class="text-primary">@Html.ActionLink("Manage Genre List", "Index", "Genre", null, new { @class = "btn btn-default btn-lg btn-block" })</p>
+	</div>
+	<div class="col-md-4">
+		<p class="text-primary">@Html.ActionLink("Add a New Movie", "Create", "Movies", null, new { @class = "btn btn-default btn-lg btn-block" })</p>
+
+	</div>
+	<div class="col-md-4">
+		<p class="text-primary">@Html.ActionLink("Remove a Movie", "Index", "Movie", null, new { @class = "btn btn-default btn-lg btn-block" })</p>
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<p class="text-primary">@Html.ActionLink("Add a New Customer", "Create", "Customer", null, new { @class = "btn btn-default btn-lg btn-block" })</p>
+	</div>
+	<div class="col-md-6">
+		<p class="text-primary">@Html.ActionLink("Remove a Customer", "Index", "Customer", null, new { @class = "btn btn-default btn-lg btn-block" })</p>
+	</div>
+</div>
+
+
