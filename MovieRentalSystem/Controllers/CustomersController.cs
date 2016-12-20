@@ -1,4 +1,5 @@
-﻿using MovieRentalSystem.Services;
+﻿using MovieRentalSystem.Models;
+using MovieRentalSystem.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,7 @@ namespace MovieRentalSystem.Controllers
             return View(Customers);
         }
 
-        // GET: Customers/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Customers/Create
+          // GET: Customers/Create
         public ActionResult Create()
         {
             return View();
@@ -34,9 +29,15 @@ namespace MovieRentalSystem.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+				var newCustomer = new Customer
+				{
+					Name = collection["name"],
+					Email = collection["email"],
+					Phone= collection["phone"]
+				};
 
-                return RedirectToAction("Index");
+				StoreDataService.AddCustomer(newCustomer);
+				return RedirectToAction("Index");
             }
             catch
             {
@@ -47,7 +48,8 @@ namespace MovieRentalSystem.Controllers
         // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+			var chgCustomer = StoreDataService.GetOneCustomer(id);
+			return View(chgCustomer);
         }
 
         // POST: Customers/Edit/5
@@ -56,9 +58,16 @@ namespace MovieRentalSystem.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+				var chgCustomer = new Customer
+				{
+					Id = id,
+					Name = collection["name"],
+					Email = collection["email"],
+					Phone = collection["phone"]
+				};
+				StoreDataService.UpdateCustomer(chgCustomer);
 
-                return RedirectToAction("Index");
+				return RedirectToAction("Index");
             }
             catch
             {

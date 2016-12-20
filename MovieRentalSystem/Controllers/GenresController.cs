@@ -1,4 +1,5 @@
-﻿using MovieRentalSystem.Services;
+﻿using MovieRentalSystem.Models;
+using MovieRentalSystem.Services;
 using MovieRentalSystem.ViewModels.Genres;
 using System;
 using System.Collections.Generic;
@@ -8,21 +9,20 @@ using System.Web.Mvc;
 
 namespace MovieRentalSystem.Controllers
 {
-    public class GenresController : Controller
+
+
+	public class GenresController : Controller
     {
-        // GET: Genres
-        public ActionResult Index()
+		public static List<Genre> Genres { get; set; } = new List<Genre>();
+
+		// GET: Genres
+		public ActionResult Index()
         {
 			var Genres = StoreDataService.GetAllGenres();
             return View(Genres);
         }
 
-        // GET: Genres/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+ 
         // GET: Genres/Create
         public ActionResult Create()
         {
@@ -35,9 +35,13 @@ namespace MovieRentalSystem.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+				var newGenre = new Genre
+				{
+					Name = collection["name"]
+				};
+				StoreDataService.AddGenre(newGenre);
 
-                return RedirectToAction("Index");
+				return RedirectToAction("Index");
             }
             catch
             {
@@ -48,7 +52,8 @@ namespace MovieRentalSystem.Controllers
         // GET: Genres/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+			var chgGenre = StoreDataService.GetOneGenre(id);
+            return View(chgGenre);
         }
 
         // POST: Genres/Edit/5
@@ -57,9 +62,14 @@ namespace MovieRentalSystem.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+				var chgGenre = new Genre
+				{
+					Id = id,
+					Name = collection["name"]
+				};
+				StoreDataService.UpdateGenre(chgGenre);
 
-                return RedirectToAction("Index");
+				return RedirectToAction("Index");
             }
             catch
             {
