@@ -11,6 +11,7 @@ namespace MovieRentalSystem.Services
 	{
 		public static List<Genre> Genres { get; set; } = new List<Genre>();
 		public static List<Customer> Customers { get; set; } = new List<Customer>();
+		public static List<Movie> Movies { get; set; } = new List<Movie>();
 
 		public static List<Genre> GetAllGenres()
 		{
@@ -274,6 +275,46 @@ namespace MovieRentalSystem.Services
 					var rowsAffected = cmd.ExecuteNonQuery();
 					connection.Close();
 				}
+			}
+		}
+
+		public static List<Movie> GetAllMovies()
+		{
+			Movies.Clear();
+			var connectionStrings = @"Server=localhost\SQLEXPRESS;Database=MovieRentalSystem;Trusted_Connection=True;";
+			using (var connection = new SqlConnection(connectionStrings))
+			{
+				using (var cmd = new SqlCommand())
+				{
+					cmd.Connection = connection;
+					cmd.CommandType = System.Data.CommandType.Text;
+					cmd.CommandText = @"SELECT Id, Name, Description, IsCheckedOut, Genre_Id FROM Movies";
+
+					connection.Open();
+					var reader = cmd.ExecuteReader();
+					while (reader.Read())
+					{
+						var id = reader[0];
+						var name = reader[1];
+						var description = reader[2];
+						var isCheckedOut = reader.GetBoolean(3);
+						var genre_id = reader[4];
+
+						var movie = new Movie
+						{
+							Id = (int)id,
+							Name = name as string,
+							Description = description as string,
+							IsCheckedOut = isCheckedOut,
+							Genre_Id = (int)genre_id
+
+						};
+						Movies.Add(movie);
+					}
+					connection.Close();
+				}
+				Movies = Movies.OrderBy(g => g.Name).ToList();
+				return Movies;
 			}
 		}
 	}
